@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Макеты · Школа Ямолод · Открывашка</title>
+<style>
+@font-face{font-family:'Masiva';src:url('Masiva-Medium.ttf') format('truetype');font-weight:500}
+@font-face{font-family:'Masiva';src:url('Masiva-Black.ttf') format('truetype');font-weight:900}
+:root{--bg:#f2f1ed;--fg:#111;--muted:#605f5a;--line:#cfcdc5}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 system-ui,-apple-system,'Segoe UI',Arial,sans-serif}
+.wrap{max-width:1080px;margin:0 auto;padding:36px 20px 72px;display:flex;flex-direction:column;gap:40px}
+.logo{height:28px;width:auto;display:block}
+.eyebrow{font:500 12px 'Masiva',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+h1{font:900 clamp(34px,7vw,84px)/.98 'Masiva','Arial Black',sans-serif;margin:10px 0 0;text-transform:uppercase;letter-spacing:-.01em}
+.lead{margin:14px 0 0;max-width:60ch;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+@media(max-width:640px){.grid{grid-template-columns:minmax(0,1fr)}}
+.card{display:flex;flex-direction:column;justify-content:space-between;gap:36px;min-height:220px;padding:22px 24px;border-radius:16px;background:#111;color:#fff;text-decoration:none;transition:transform .15s}
+.card:hover{transform:translateY(-3px)}
+.card:focus-visible{outline:3px solid #8a6fd1;outline-offset:3px}
+.card.light{background:#e4e2db;color:#111}
+.card .k{font:500 12px 'Masiva',sans-serif;letter-spacing:.14em;text-transform:uppercase;opacity:.7}
+.card .t{font:900 clamp(24px,3.4vw,36px)/1.05 'Masiva',sans-serif;text-transform:uppercase}
+.card .s{font-size:14px;opacity:.75;margin-top:8px}
+@media(prefers-reduced-motion:reduce){.card{transition:none}}
+footer{font-size:13px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+<img class="logo" src="logo-horizontal-black.svg" alt="Школа Ямолод">
+<h1 style="margin-top:36px">Макеты<br>Открывашки</h1>
+<p class="lead">Молодёжный фестиваль «Открывашка», 4–6 декабря 2026. Обложка блокнота, плакетка гранта и фирменные пакеты.</p>
+</header>
+<main class="grid">
+<a class="card" href="cover.html"><span class="k">Печать · А5</span><span><span class="t">Обложка блокнота</span><div class="s">Передняя и задняя стороны</div></span></a>
+<a class="card light" href="plaque.html"><span class="k">Пластик · А3</span><span><span class="t">Плакетка гранта</span><div class="s">Чёрная и белая версии</div></span></a>
+<a class="card light" href="bag-polyethylene.html"><span class="k">Шелкография · 30 × 35 × 6 см</span><span><span class="t">Пакет полиэтиленовый</span><div class="s">Логотип на стороне А, два варианта стороны Б</div></span></a>
+<a class="card" href="bag-paper.html"><span class="k">Бумага · 25 × 35 × 8 см</span><span><span class="t">Пакет бумажный</span><div class="s">Цвет бумаги и печати на выбор</div></span></a>
+</main>
+<footer>Школа Ямолод</footer>
+</div>
+</body>
+</html>
