@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Пакет 25×35×8 — 3D</title>
+<style>
+  @font-face { font-family: 'Masiva'; src: url('Masiva-Medium.ttf') format('truetype'); font-weight: 500; }
+  html, body { margin: 0; height: 100%; background: #ecebe7; overflow: hidden; font-family: 'Masiva', Arial, sans-serif; }
+  canvas { display: block; }
+  #hint { position: fixed; left: 0; right: 0; bottom: 16px; text-align: center; color: #6b6a66; font-size: 13px; pointer-events: none; }
+  #bar { position: fixed; top: 16px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; }
+  #bar button { border: 0; border-radius: 999px; background: #111; color: #fff; padding: 7px 14px; font-size: 13px; cursor: pointer; }
+  #bar button:hover { background: #333; }
+</style>
+</head>
+<body>
+<div id="bar">
+  <button data-v="front">спереди</button>
+  <button data-v="q">3/4</button>
+  <button data-v="side">сбоку</button>
+  <button data-v="back">сзади</button>
+  <button data-v="spin">стоп</button>
+</div>
+<div id="hint">тяни пакет мышью или пальцем — он поворачивается · колесо — ближе/дальше · двойной щелчок — выровнять</div>
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
+<script type="module">
+import * as THREE from 'three';
+
+const LOGO_PATHS = ["M250.977 40.7722H240.719L238.341 33.3066H223.963L221.585 40.7722H211.327L224.018 1.12158H238.231L250.977 40.7722ZM231.152 10.8822L226.451 25.5922H235.853L231.152 10.8822Z", "M183.789 1.12158H198.001L210.748 40.7722H200.49L190.923 10.8822L181.355 40.7722H171.097L183.789 1.12158Z", "M135.172 6.13863C139.153 2.04637 143.955 0.000244141 149.577 0.000244141C155.2 0.000244141 160.002 2.04637 163.983 6.13863C167.965 10.2493 169.956 15.1895 169.956 20.9592C169.956 26.7474 167.965 31.6876 163.983 35.7799C160.002 39.8721 155.2 41.9182 149.577 41.9182C143.955 41.9182 139.153 39.8721 135.172 35.7799C131.171 31.706 129.171 26.7658 129.171 20.9592C129.171 15.1895 131.171 10.2493 135.172 6.13863ZM142.222 29.365C144.232 31.6876 146.683 32.8489 149.577 32.8489C152.435 32.8489 154.886 31.6876 156.932 29.365C158.979 27.0423 160.002 24.2404 160.002 20.9592C160.002 17.6781 158.979 14.8762 156.932 12.5535C154.886 10.2309 152.435 9.06957 149.577 9.06957C146.683 9.06957 144.232 10.2309 142.222 12.5535C140.176 14.8762 139.153 17.6781 139.153 20.9592C139.153 24.2404 140.176 27.0423 142.222 29.365Z", "M118.197 1.12158H129.755L117.118 20.9469L129.755 40.7722H118.197L108.27 25.1498H102.906V40.7722H92.9243V1.12158H102.906V16.7717H108.27L118.197 1.12158Z", "M76.7319 32.3942V1.12158H86.7136V40.7722H33.2378V1.12158H43.2196V32.3942H54.9987V1.12158H64.9528V32.3942H76.7319Z", "M227.591 53.2734H242.134L252.377 85.2744H258.177V93.8475H247.991H221.734H211.52L211.52 85.2744H217.32L227.591 53.2734ZM234.834 63.2613L227.817 85.2744H241.908L234.834 63.2613Z", "M175.355 58.3873C179.429 54.1997 184.343 52.106 190.096 52.106C195.849 52.106 200.763 54.1997 204.837 58.3873C208.912 62.5937 210.949 67.649 210.949 73.5531C210.949 79.476 208.912 84.5313 204.837 88.7189C200.763 92.9064 195.849 95.0002 190.096 95.0002C184.343 95.0002 179.429 92.9064 175.355 88.7189C171.261 84.5502 169.215 79.4949 169.215 73.5531C169.215 67.649 171.261 62.5937 175.355 58.3873ZM182.57 82.1546C184.626 84.5313 187.135 85.7197 190.096 85.7197C193.02 85.7197 195.529 84.5313 197.622 82.1546C199.716 79.7778 200.763 76.9107 200.763 73.5531C200.763 70.1955 199.716 67.3283 197.622 64.9516C195.529 62.5749 193.02 61.3865 190.096 61.3865C187.135 61.3865 184.626 62.5749 182.57 64.9516C180.476 67.3283 179.429 70.1955 179.429 73.5531C179.429 76.9107 180.476 79.7778 182.57 82.1546Z", "M140.477 53.2734H155.021L168.064 93.8475H157.567L147.777 63.2613L137.987 93.8475H127.49L140.477 53.2734Z", "M90.7087 58.3873C94.7831 54.1997 99.6969 52.106 105.45 52.106C111.203 52.106 116.117 54.1997 120.191 58.3873C124.266 62.5937 126.303 67.649 126.303 73.5531C126.303 79.476 124.266 84.5313 120.191 88.7189C116.117 92.9064 111.203 95.0002 105.45 95.0002C99.6969 95.0002 94.7831 92.9064 90.7087 88.7189C86.6155 84.5502 84.5688 79.4949 84.5688 73.5531C84.5688 67.649 86.6155 62.5937 90.7087 58.3873ZM97.9238 82.1546C99.9798 84.5313 102.489 85.7197 105.45 85.7197C108.374 85.7197 110.883 84.5313 112.976 82.1546C115.07 79.7778 116.117 76.9107 116.117 73.5531C116.117 70.1955 115.07 67.3283 112.976 64.9516C110.883 62.5749 108.374 61.3865 105.45 61.3865C102.489 61.3865 99.9798 62.5749 97.9238 64.9516C95.83 67.3283 94.7831 70.1955 94.7831 73.5531C94.7831 76.9107 95.83 79.7778 97.9238 82.1546Z", "M60.831 67.5904L70.3379 53.2734H80.5239V93.8475H70.3379V68.7505L60.831 83.0674L51.3241 68.7505V93.8475H41.1099V53.2734H51.3241L60.831 67.5904Z", "M18.5328 53.2734H34.7455V93.8475H24.5595V81.0868H19.9192L11.7988 93.8475H0L8.85614 79.9267C2.95205 78.1159 0 73.8717 0 67.1943C0 62.3654 1.48074 58.838 4.44222 56.6122C7.36597 54.3863 12.0628 53.2734 18.5328 53.2734ZM18.5328 72.5136H24.5595V61.8749H18.5328C15.6279 61.8749 13.5058 62.2993 12.1666 63.1482C10.8462 63.997 10.186 65.3457 10.186 67.1943C10.186 69.0428 10.8462 70.3915 12.1666 71.2404C13.5058 72.0892 15.6279 72.5136 18.5328 72.5136Z", "M6.75302 10.9958V11.2841H6.76056C6.82089 12.9017 7.7523 14.3957 9.11359 15.1896L9.21163 15.242L5.91211 18.5183H8.53287L11.6778 15.3955L10.3693 14.0962L9.40772 13.1414H9.41149C8.91373 12.6134 8.61206 11.8945 8.61206 11.1306C8.61206 9.64035 9.78481 8.31483 11.3007 8.29985H16.0709V11.2467H17.9299V6.45386H11.2818C8.81569 6.4576 6.82843 8.60315 6.76433 10.9958H6.75302Z", "M17.92 12.2933H16.0647L14.3678 13.9783L12.6672 12.2896H10.0464L14.3678 16.5806L16.0647 14.8957V18.524H17.92V12.297V12.2933Z", "M12.7644 0C5.72797 0 0 5.68775 0 12.6748C0 19.6619 5.72797 25.3496 12.7644 25.3496C19.8009 25.3496 25.5289 19.6619 25.5289 12.6748C25.5289 5.68775 19.8047 0 12.7644 0ZM12.8059 23.5448C11.6747 23.5448 10.5849 23.3726 9.55919 23.0543C5.11332 21.6764 1.87413 17.55 1.87413 12.6898C1.87413 6.70248 6.78005 1.83476 12.8059 1.83476C13.9221 1.83476 14.9968 2.00326 16.0112 2.3103C20.4797 3.67326 23.7377 7.81083 23.7377 12.6898C23.7377 18.6771 18.8356 23.5448 12.8059 23.5448Z"];
+const LOGO_VB = [0.0, 0.0, 259.0, 95.0];
+const W = 25, H = 35, D = 8, HW = W / 2, HD = D / 2;   // см
+const LOGO_W = 16, LOGO_TOP = 13;                       // см
+const BAG = '#1c1c1e', LOGO = '#efefec';
+
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.setSize(innerWidth, innerHeight);
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+document.body.appendChild(renderer.domElement);
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color('#e8e6df');
+// камера неподвижна, крутится сам пакет
+const PIVOT_Y = 24, FLOOR_Y = -12;
+const camera = new THREE.PerspectiveCamera(32, innerWidth / innerHeight, 1, 1000);
+let dist = 125;
+function placeCamera() {
+  camera.position.set(0, PIVOT_Y + dist * 0.22, dist);
+  camera.lookAt(0, PIVOT_Y - 2, 0);
+}
+placeCamera();
+
+scene.add(new THREE.HemisphereLight('#ffffff', '#b8b6b0', 1.6));
+const sun = new THREE.DirectionalLight('#ffffff', 2.2);
+sun.position.set(-40, 90, 60);
+sun.castShadow = true;
+sun.shadow.mapSize.set(2048, 2048);
+Object.assign(sun.shadow.camera, { left: -50, right: 50, top: 70, bottom: -20, near: 10, far: 250 });
+sun.shadow.radius = 6;
+scene.add(sun);
+const fill = new THREE.DirectionalLight('#ffffff', 0.7);
+fill.position.set(60, 30, -40);
+scene.add(fill);
+
+const floor = new THREE.Mesh(new THREE.PlaneGeometry(400, 400), new THREE.ShadowMaterial({ opacity: 0.22 }));
+floor.rotation.x = -Math.PI / 2; floor.position.y = FLOOR_Y; floor.receiveShadow = true;
+scene.add(floor);
+
+// ---- текстуры ----
+function canvasTex(w, h, draw) {
+  const c = document.createElement('canvas'); c.width = w; c.height = h;
+  draw(c.getContext('2d'), w, h);
+  const t = new THREE.CanvasTexture(c);
+  t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8;
+  return t;
+}
+const PX = 60; // пикселей на см
+const frontTex = canvasTex(W * PX, H * PX, (g, w, h) => {
+  g.fillStyle = BAG; g.fillRect(0, 0, w, h);
+  const s = LOGO_W * PX / LOGO_VB[2];
+  g.save();
+  g.translate((W - LOGO_W) / 2 * PX, LOGO_TOP * PX);
+  g.scale(s, s);
+  g.fillStyle = LOGO;
+  for (const d of LOGO_PATHS) g.fill(new Path2D(d));
+  g.restore();
+});
+const plainTex = canvasTex(64, 64, (g, w, h) => { g.fillStyle = BAG; g.fillRect(0, 0, w, h); });
+const innerTex = canvasTex(64, 700, (g, w, h) => {
+  const band = h * 4 / H;
+  const gr = g.createLinearGradient(0, band, 0, h);
+  gr.addColorStop(0, '#d6d5d0'); gr.addColorStop(1, '#a9a8a3');
+  g.fillStyle = gr; g.fillRect(0, 0, w, h);
+  g.fillStyle = BAG; g.fillRect(0, 0, w, band);
+});
+const ropeTex = canvasTex(64, 64, (g, w, h) => {
+  g.fillStyle = '#f2f2ef'; g.fillRect(0, 0, w, h);
+  g.strokeStyle = '#cfcfca'; g.lineWidth = 9;
+  for (let i = -2; i < 4; i++) { g.beginPath(); g.moveTo(i * 24, h); g.lineTo(i * 24 + 40, 0); g.stroke(); }
+});
+ropeTex.wrapS = ropeTex.wrapT = THREE.RepeatWrapping;
+ropeTex.repeat.set(70, 1);
+
+const paper = (map, side = THREE.FrontSide) => new THREE.MeshStandardMaterial({ map, roughness: 0.82, metalness: 0, side });
+const outerMat = paper(plainTex), frontMat = paper(frontTex), innerMat = paper(innerTex);
+const outerGus = paper(plainTex, THREE.DoubleSide), innerGus = paper(innerTex, THREE.DoubleSide);
+
+const pivot = new THREE.Group();
+pivot.position.y = PIVOT_Y;
+scene.add(pivot);
+const bag = new THREE.Group();
+bag.position.y = -PIVOT_Y;
+pivot.add(bag);
+
+function wall(mat, w, h, pos, rotY) {
+  const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), mat);
+  m.position.set(...pos); m.rotation.y = rotY; m.castShadow = true;
+  bag.add(m); return m;
+}
+const e = 0.03;
+wall(frontMat, W, H, [0, H / 2, HD], 0);                 // лицевая
+wall(innerMat, W, H, [0, H / 2, HD - e], Math.PI);       // лицевая изнутри
+wall(outerMat, W, H, [0, H / 2, -HD], Math.PI);          // оборот (без логотипа)
+wall(innerMat, W, H, [0, H / 2, -HD + e], 0);            // оборот изнутри
+
+// боковые складки: ребро сгиба вверху уходит внутрь
+const INSET = 1.4;
+function gusset(sign) {
+  const x = sign * HW, xi = sign * (HW - INSET);
+  const v = [
+    [x, H, HD], [xi, H, 0], [x, 0, HD], [x, 0, 0],       // передняя половина
+    [xi, H, 0], [x, H, -HD], [x, 0, 0], [x, 0, -HD],     // задняя половина
+  ];
+  for (const inner of [false, true]) {
+    const pos = [], uv = [];
+    for (let q = 0; q < 2; q++) {
+      const [a, b, c, d] = v.slice(q * 4, q * 4 + 4);
+      const off = inner ? -sign * e : 0;
+      const tri = (p) => pos.push(p[0] + off, p[1], p[2]);
+      const order = (sign > 0) !== inner ? [a, c, b, b, c, d] : [a, b, c, b, d, c];
+      order.forEach(tri);
+      order.forEach(p => uv.push(0, p[1] / H));
+    }
+    const g = new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+    g.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2));
+    g.computeVertexNormals();
+    const m = new THREE.Mesh(g, inner ? innerGus : outerGus);
+    m.castShadow = true; bag.add(m);
+  }
+}
+gusset(1); gusset(-1);
+
+const bottom = new THREE.Mesh(new THREE.PlaneGeometry(W, D), paper(canvasTex(8, 8, (g) => { g.fillStyle = '#a3a29d'; g.fillRect(0, 0, 8, 8); })));
+bottom.rotation.x = -Math.PI / 2; bottom.position.y = 0.05; bag.add(bottom);
+const bottomOut = new THREE.Mesh(new THREE.PlaneGeometry(W, D), outerMat);   // дно снаружи
+bottomOut.rotation.x = Math.PI / 2; bottomOut.castShadow = true; bag.add(bottomOut);
+
+// линия сгиба дна у основания лицевой и оборота
+const creaseMat = new THREE.LineBasicMaterial({ color: '#2c2c2f' });
+for (const z of [HD + 0.01, -HD - 0.01]) {
+  bag.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-HW, 4, z), new THREE.Vector3(HW, 4, z)]), creaseMat));
+}
+
+// ---- ручки ----
+const ropeMat = new THREE.MeshStandardMaterial({ map: ropeTex, roughness: 0.9 });
+const holeMat = new THREE.MeshBasicMaterial({ color: '#070708' });
+function handle(sign) {
+  const pts = [];
+  for (let i = 0; i <= 60; i++) {
+    const t = i / 60, s = Math.sin(Math.PI * t);
+    pts.push(new THREE.Vector3(
+      -5 * Math.cos(Math.PI * t) * (1 + 0.18 * s),
+      H - 2.5 + 15.5 * Math.pow(s, 0.85),
+      sign * (HD + 0.3 + 1.6 * s)));
+  }
+  // концы уходят в отверстия
+  pts.unshift(new THREE.Vector3(-5, H - 2.5, sign * (HD - 0.6)));
+  pts.push(new THREE.Vector3(5, H - 2.5, sign * (HD - 0.6)));
+  const rope = new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts), 200, 0.28, 14), ropeMat);
+  rope.castShadow = true; bag.add(rope);
+  for (const x of [-5, 5]) {
+    const h = new THREE.Mesh(new THREE.CircleGeometry(0.36, 24), holeMat);
+    h.position.set(x, H - 2.5, sign * (HD + 0.02));
+    if (sign < 0) h.rotation.y = Math.PI;
+    bag.add(h);
+  }
+}
+handle(1); handle(-1);
+
+// ---- вращение пакета мышью / пальцем ----
+const PITCH_MAX = 1.1;
+let yaw = -0.6, pitch = 0, tYaw = yaw, tPitch = pitch;   // текущие и целевые углы
+let vYaw = 0, dragging = false, spin = true, lx = 0, ly = 0, lt = 0;
+const el = renderer.domElement;
+el.style.cursor = 'grab';
+el.addEventListener('pointerdown', (ev) => {
+  dragging = true; spin = false; setSpinLabel();
+  lx = ev.clientX; ly = ev.clientY; lt = performance.now(); vYaw = 0;
+  el.setPointerCapture(ev.pointerId); el.style.cursor = 'grabbing';
+});
+el.addEventListener('pointermove', (ev) => {
+  if (!dragging) return;
+  const dx = ev.clientX - lx, dy = ev.clientY - ly, now = performance.now();
+  tYaw += dx * 0.009;
+  tPitch = Math.max(-PITCH_MAX, Math.min(PITCH_MAX, tPitch + dy * 0.009));
+  vYaw = dx * 0.009 / Math.max(1, now - lt) * 16;
+  lx = ev.clientX; ly = ev.clientY; lt = now;
+});
+const endDrag = () => { dragging = false; el.style.cursor = 'grab'; };
+el.addEventListener('pointerup', endDrag);
+el.addEventListener('pointercancel', endDrag);
+el.addEventListener('wheel', (ev) => {
+  ev.preventDefault();
+  dist = Math.max(55, Math.min(220, dist * (1 + Math.sign(ev.deltaY) * 0.08)));
+  placeCamera();
+}, { passive: false });
+el.addEventListener('dblclick', () => { tPitch = 0; });
+
+// ---- виды: поворот пакета ----
+const VIEWS = { front: [0, 0], q: [-0.6, 0.12], side: [-Math.PI / 2, 0], back: [Math.PI, 0] };
+function setSpinLabel() { document.querySelector('[data-v=spin]').textContent = spin ? 'стоп' : 'вращать'; }
+document.querySelectorAll('#bar button').forEach(b => b.onclick = () => {
+  if (b.dataset.v === 'spin') { spin = !spin; setSpinLabel(); return; }
+  spin = false; setSpinLabel(); vYaw = 0;
+  const [y, p] = VIEWS[b.dataset.v];
+  // ближайший к текущему эквивалентный угол
+  tYaw = y + Math.round((tYaw - y) / (2 * Math.PI)) * 2 * Math.PI;
+  tPitch = p;
+});
+tPitch = pitch = VIEWS.q[1];
+
+addEventListener('resize', () => {
+  camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight);
+});
+renderer.setAnimationLoop(() => {
+  if (!dragging) {
+    if (spin) tYaw += 0.008;
+    else if (Math.abs(vYaw) > 0.0005) { tYaw += vYaw; vYaw *= 0.94; }  // инерция после броска
+  }
+  yaw += (tYaw - yaw) * 0.18;
+  pitch += (tPitch - pitch) * 0.18;
+  pivot.rotation.set(pitch, yaw, 0, 'XYZ');
+  renderer.render(scene, camera);
+});
+</script>
+</body>
+</html>

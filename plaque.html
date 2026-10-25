@@ -1,114 +1,15 @@
 <!doctype html>
 <html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Плакетка гранта — Школа Ямолод</title>
-<style>
-@font-face{font-family:'Masiva';src:url('Masiva-Regular.ttf') format('truetype');font-weight:400;font-style:normal}
-@font-face{font-family:'Masiva';src:url('Masiva-Medium.ttf') format('truetype');font-weight:500;font-style:normal}
-@font-face{font-family:'Masiva';src:url('Masiva-Bold.ttf') format('truetype');font-weight:700;font-style:normal}
-@font-face{font-family:'Masiva';src:url('Masiva-Black.ttf') format('truetype');font-weight:900;font-style:normal}
-
-:root{--bg:#f2f1ed;--panel:#e8e6df;--fg:#111;--muted:#605f5a;--line:#cfcdc5}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 system-ui,-apple-system,'Segoe UI',Arial,sans-serif}
-.wrap{max-width:1080px;margin:0 auto;padding:28px 20px 64px;display:flex;flex-direction:column;gap:32px}
-.back{font:500 14px 'Masiva',sans-serif;color:var(--fg);text-decoration:none;letter-spacing:.04em}
-.back:hover{text-decoration:underline}
-.eyebrow{font:500 12px 'Masiva',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
-h1{font:900 clamp(30px,6vw,64px)/1 'Masiva','Arial Black',sans-serif;margin:8px 0 0;text-transform:uppercase;letter-spacing:-.01em}
-.lead{margin:12px 0 0;max-width:62ch;color:var(--muted)}
-.stage{background:var(--panel);border-radius:16px;padding:24px}
-.frame{position:relative;width:100%;overflow:hidden;border-radius:6px}
-.art{transform-origin:0 0;position:absolute;left:0;top:0}
-.pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;align-items:start}
-@media(max-width:640px){.pair{grid-template-columns:minmax(0,1fr)}}
-figure{margin:0;display:flex;flex-direction:column;gap:10px}
-figcaption{font-size:14px;color:var(--muted);display:flex;justify-content:space-between;gap:12px}
-figcaption b{color:var(--fg);font-weight:600}
-.ctl{display:flex;gap:8px;margin-top:16px}
-.ctl button{font:500 14px 'Masiva',sans-serif;border:1.5px solid var(--line);background:transparent;color:var(--fg);border-radius:999px;padding:8px 18px;cursor:pointer}
-.ctl button[aria-pressed=true]{border-color:var(--fg);background:var(--fg);color:var(--bg)}
-.ctl button:focus-visible{outline:2px solid #8a6fd1;outline-offset:2px}
-h2{font:900 20px/1.2 'Masiva',sans-serif;margin:0 0 12px;text-transform:uppercase}
-.spec{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px 28px;margin:0;padding:20px 22px;background:var(--panel);border-radius:14px}
-.spec div{display:flex;flex-direction:column;gap:2px}
-.spec dt{font:500 12px 'Masiva',sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-.spec dd{margin:0}
-
-.frame{background:#000}
-.plaque{--bg:#000;--fg:#fff;--muted:#8a8a8a;--label:#a6a6a6;--boxBg:#fff;--boxFg:#000;--boxMuted:#6b6b6b}
-.plaque.light{--bg:#fff;--fg:#000;--muted:#6b6b6b;--label:#555;--boxBg:#000;--boxFg:#fff;--boxMuted:#8a8a8a}
-</style></head><body>
+<title>Плакетка гранта — Открывашка</title>
+<link rel="stylesheet" href="style.css"></head><body>
 <div class="wrap">
-<a class="back" href="index.html">← Все макеты</a>
-<header><span class="eyebrow">Открывашка · 4–6 декабря 2026</span><h1>Плакетка гранта</h1><p class="lead">Прямоугольная пластиковая плакетка формата А3 для вручения грантов. Имя получателя, направление, сумма и номер гранта — переменные поля; всё остальное постоянное.</p></header>
-<div class="stage"><div class="frame" data-w="1587" data-h="1123"><div class="art plaque" id="plaque"><div style="width: 1587px; height: 1123px; box-sizing: border-box; padding: 68px; display: flex; flex-direction: column; overflow: hidden; background: var(--bg); color: var(--fg); font-family: 'Masiva', 'Arial Black', Impact, sans-serif; text-transform: uppercase;">
-
-<div style="display: flex; justify-content: space-between; align-items: flex-start; height: 70px; flex-shrink: 0">
-<svg viewBox="0 0 431 36" width="554" height="46" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Школа Ямолод" style="display: block; color: var(--fg)">
-<path d="M205.186 34.4074H196.8L194.856 28.3039H183.101L181.157 34.4074H172.77L183.146 1.99097H194.765L205.186 34.4074ZM188.978 9.97074L185.135 21.9969H192.821L188.978 9.97074Z" fill="currentColor"></path>
-<path d="M150.256 1.99097H161.876L172.297 34.4074H163.91L156.089 9.97074L148.267 34.4074H139.88L150.256 1.99097Z" fill="currentColor"></path>
-<path d="M110.509 6.09266C113.765 2.74703 117.69 1.07422 122.287 1.07422C126.883 1.07422 130.809 2.74703 134.064 6.09266C137.32 9.45335 138.947 13.4922 138.947 18.2093C138.947 22.9414 137.32 26.9802 134.064 30.3258C130.809 33.6715 126.883 35.3443 122.287 35.3443C117.69 35.3443 113.765 33.6715 110.509 30.3258C107.239 26.9953 105.604 22.9564 105.604 18.2093C105.604 13.4922 107.239 9.45335 110.509 6.09266ZM116.274 25.0814C117.917 26.9802 119.921 27.9297 122.287 27.9297C124.623 27.9297 126.627 26.9802 128.3 25.0814C129.973 23.1825 130.809 20.8918 130.809 18.2093C130.809 15.5267 129.973 13.236 128.3 11.3372C126.627 9.43828 124.623 8.48885 122.287 8.48885C119.921 8.48885 117.917 9.43828 116.274 11.3372C114.601 13.236 113.765 15.5267 113.765 18.2093C113.765 20.8918 114.601 23.1825 116.274 25.0814Z" fill="currentColor"></path>
-<path d="M96.6317 1.99097H106.081L95.7501 18.1992L106.081 34.4074H96.6317L88.5163 21.6352H84.1308V34.4074H75.9702V1.99097H84.1308V14.7857H88.5163L96.6317 1.99097Z" fill="currentColor"></path>
-<path d="M62.7324 27.5579V1.99097H70.893V34.4074H27.1738V1.99097H35.3344V27.5579H44.9644V1.99097H53.1024V27.5579H62.7324Z" fill="currentColor"></path>
-<path d="M405.732 0.95459H417.622L425.995 27.1169H430.738V34.126H422.41H400.943H392.593L392.593 27.1169H397.335L405.732 0.95459ZM411.654 9.12021L405.917 27.1169H417.437L411.654 9.12021Z" fill="currentColor"></path>
-<path d="M363.026 5.13532C366.357 1.71177 370.375 0 375.078 0C379.782 0 383.799 1.71177 387.13 5.13532C390.461 8.57428 392.127 12.7072 392.127 17.5341C392.127 22.3764 390.461 26.5093 387.13 29.9329C383.799 33.3564 379.782 35.0682 375.078 35.0682C370.375 35.0682 366.357 33.3564 363.026 29.9329C359.68 26.5248 358.007 22.3918 358.007 17.5341C358.007 12.7072 359.68 8.57428 363.026 5.13532ZM368.925 24.5662C370.606 26.5093 372.657 27.4809 375.078 27.4809C377.469 27.4809 379.52 26.5093 381.231 24.5662C382.943 22.6232 383.799 20.2791 383.799 17.5341C383.799 14.7891 382.943 12.445 381.231 10.502C379.52 8.55886 377.469 7.58731 375.078 7.58731C372.657 7.58731 370.606 8.55886 368.925 10.502C367.213 12.445 366.358 14.7891 366.358 17.5341C366.358 20.2791 367.213 22.6232 368.925 24.5662Z" fill="currentColor"></path>
-<path d="M334.513 0.95459H346.403L357.066 34.126H348.484L340.481 9.12021L332.477 34.126H323.895L334.513 0.95459Z" fill="currentColor"></path>
-<path d="M293.824 5.13532C297.155 1.71177 301.172 0 305.876 0C310.579 0 314.596 1.71177 317.927 5.13532C321.258 8.57428 322.924 12.7072 322.924 17.5341C322.924 22.3764 321.258 26.5093 317.927 29.9329C314.596 33.3564 310.579 35.0682 305.876 35.0682C301.172 35.0682 297.155 33.3564 293.824 29.9329C290.477 26.5248 288.804 22.3918 288.804 17.5341C288.804 12.7072 290.477 8.57428 293.824 5.13532ZM299.723 24.5662C301.403 26.5093 303.455 27.4809 305.876 27.4809C308.266 27.4809 310.317 26.5093 312.029 24.5662C313.741 22.6232 314.596 20.2791 314.596 17.5341C314.596 14.7891 313.741 12.445 312.029 10.502C310.317 8.55886 308.266 7.58731 305.876 7.58731C303.455 7.58731 301.403 8.55886 299.723 10.502C298.011 12.445 297.155 14.7891 297.155 17.5341C297.155 20.2791 298.011 22.6232 299.723 24.5662Z" fill="currentColor"></path>
-<path d="M269.397 12.6594L277.17 0.95459H285.497V34.126H277.17V13.6078L269.397 25.3126L261.625 13.6078V34.126H253.274V0.95459H261.625L269.397 12.6594Z" fill="currentColor"></path>
-<path d="M234.817 0.95459H248.071V34.126H239.744V23.6934H235.95L229.311 34.126H219.665L226.905 22.745C222.078 21.2645 219.665 17.7947 219.665 12.3356C219.665 8.38769 220.876 5.50389 223.297 3.68417C225.687 1.86445 229.527 0.95459 234.817 0.95459ZM234.817 16.6844H239.744V7.98674H234.817C232.442 7.98674 230.707 8.33372 229.612 9.02768C228.532 9.72164 227.993 10.8243 227.993 12.3356C227.993 13.8469 228.532 14.9495 229.612 15.6434C230.707 16.3374 232.442 16.6844 234.817 16.6844Z" fill="currentColor"></path>
-<path d="M5.52098 10.0639V10.2996H5.52715C5.57647 11.622 6.33794 12.8435 7.45087 13.4925L7.53102 13.5353L4.8335 16.2139H6.9761L9.54723 13.6608L8.47747 12.5986L7.69133 11.818H7.69441C7.28747 11.3863 7.04084 10.7986 7.04084 10.1741C7.04084 8.9557 7.99962 7.87202 9.23894 7.85978H13.1388V10.269H14.6587V6.35059H9.22353C7.20732 6.35365 5.58264 8.10774 5.53023 10.0639H5.52098Z" fill="currentColor"></path>
-<path d="M14.6504 11.1244H13.1337L11.7464 12.502L10.356 11.1213H8.21338L11.7464 14.6295L13.1337 13.252V16.2183H14.6504V11.1275V11.1244Z" fill="currentColor"></path>
-<path d="M10.4356 1.07422C4.68291 1.07422 0 5.72424 0 11.4365C0 17.1488 4.68291 21.7988 10.4356 21.7988C16.1882 21.7988 20.8711 17.1488 20.8711 11.4365C20.8711 5.72424 16.1913 1.07422 10.4356 1.07422ZM10.4695 20.3233C9.54462 20.3233 8.65367 20.1825 7.81512 19.9223C4.1804 18.7957 1.5322 15.4222 1.5322 11.4488C1.5322 6.55384 5.54303 2.57423 10.4695 2.57423C11.382 2.57423 12.2606 2.71198 13.0899 2.963C16.7432 4.07729 19.4068 7.45996 19.4068 11.4488C19.4068 16.3437 15.399 20.3233 10.4695 20.3233Z" fill="currentColor"></path>
-</svg>
-<div style="text-align: right">
-<div style="font-size: 28px; font-weight: 700; line-height: 1.1">Открывашка</div>
-<div style="font-size: 17px; font-weight: 500; line-height: 1.4; margin-top: 6px">Молодёжный фестиваль</div>
+<a class="back" href="./">← Все макеты</a>
+<header><span class="eyebrow">Открывашка · 4–6 декабря 2026</span><h1>Плакетка гранта</h1>
+<p class="lead">Плакетка для вручения грантов фестиваля. Сумма, имя и проект вписываются в поля.</p></header>
+<section class="stage"><img class="shadow" src="plaque.jpg" alt="Плакетка гранта «Открывашка»"></section>
+<section><h2>Параметры</h2><dl class="spec">
+<div><dt>Формат</dt><dd>А3, 420 × 297 мм, вылеты 3 мм</dd></div>
+<div><dt>Материал</dt><dd>Пластик</dd></div>
+<div><dt>Цвет</dt><dd>CMYK</dd></div></dl></section>
 </div>
-</div>
-
-<div style="height: 2px; background: var(--fg); margin-top: 36px; flex-shrink: 0"></div>
-
-<div style="flex-grow: 1; display: flex; align-items: center; min-height: 0">
-<h1 style="margin: 0 0 0 -29px; position: relative; top: 0.1em; font-size: 420px; font-weight: 900; line-height: 0.7; letter-spacing: 12px; white-space: nowrap">Грант</h1>
-</div>
-
-<div style="display: flex; justify-content: space-between; align-items: stretch; gap: 48px; flex-shrink: 0">
-<div style="flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between">
-<div>
-<div style="font-size: 17px; font-weight: 500; color: var(--label)">Вручается</div>
-<div style="font-size: 49px; font-weight: 700; line-height: 1.15; margin-top: 10px; color: var(--muted)">Название команды / ФИО</div>
-<div style="height: 2px; background: var(--fg); margin-top: 12px"></div>
-</div>
-<div>
-<div style="font-size: 17px; font-weight: 500; color: var(--label)">Направление</div>
-<div style="font-size: 49px; font-weight: 700; line-height: 1.15; margin-top: 10px; color: var(--muted)"><br></div>
-<div style="height: 2px; background: var(--fg); margin-top: 12px"></div>
-</div>
-</div>
-<div style="width: 499px; height: 253px; box-sizing: border-box; padding: 28px 32px; display: flex; flex-direction: column; justify-content: space-between; flex-shrink: 0; background: var(--boxBg); color: var(--boxFg)">
-<div style="font-size: 17px; font-weight: 500">Сумма гранта</div>
-<div style="font-size: 64px; font-weight: 900; line-height: 1; color: var(--boxMuted)">000 000 ₽</div>
-</div>
-</div>
-
-<div style="height: 2px; background: var(--fg); margin-top: 56px; flex-shrink: 0"></div>
-<div style="display: flex; justify-content: space-between; align-items: center; margin-top: 22px; font-size: 19px; font-weight: 500; flex-shrink: 0">
-<span>4–6 декабря 2026</span>
-<span>Грант № 00</span>
-</div>
-
-</div></div></div>
-<div class="ctl" role="group" aria-label="Цвет плакетки"><button type="button" data-mode="dark" aria-pressed="true">Чёрная</button><button type="button" data-mode="light" aria-pressed="false">Белая</button></div></div>
-<section><h2>Параметры</h2><dl class="spec"><div><dt>Формат</dt><dd>А3, альбомная, 420 × 297 мм</dd></div><div><dt>Материал</dt><dd>Пластик</dd></div><div><dt>Шрифт</dt><dd>Masiva (Black, Bold, Medium)</dd></div><div><dt>Цвет</dt><dd>Чёрный фон с белым или белый с чёрным — переключатель выше</dd></div><div><dt>Переменные поля</dt><dd>Кому вручается, направление, сумма гранта, номер гранта</dd></div></dl></section>
-</div>
-<script>
-function fit(){document.querySelectorAll('.frame').forEach(function(f){var a=f.querySelector('.art');var w=+f.dataset.w,h=+f.dataset.h;var s=f.clientWidth/w;a.style.transform='scale('+s+')';f.style.height=(h*s)+'px';});}
-window.addEventListener('resize',fit);window.addEventListener('load',fit);
-if(document.fonts&&document.fonts.ready){document.fonts.ready.then(fit);}fit();
-
-document.querySelectorAll('[data-mode]').forEach(function(b){b.addEventListener('click',function(){
-document.querySelectorAll('[data-mode]').forEach(function(x){x.setAttribute('aria-pressed',String(x===b));});
-var l=b.dataset.mode==='light';document.getElementById('plaque').classList.toggle('light',l);
-document.querySelector('.frame').style.background=l?'#fff':'#000';});});
-</script>
 </body></html>
