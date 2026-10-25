@@ -1,16 +1,33 @@
 <!doctype html>
 <html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Пакет чёрный — Открывашка</title>
+<title>Пакет бумажный — Открывашка</title>
 <link rel="stylesheet" href="style.css">
-<style>.model{display:block;width:100%;height:min(78vh,720px);border:0;border-radius:12px;background:#e8e6df}</style></head><body>
+<style>
+.model{display:block;width:100%;height:min(78vh,720px);border:0;border-radius:12px;background:#e8e6df}
+.variant{display:flex;flex-direction:column;gap:16px}
+.variant h2{margin:0}
+</style></head><body>
 <div class="wrap">
 <a class="back" href="./">← Все макеты</a>
-<header><span class="eyebrow">Школа Ямолод</span><h1>Пакет чёрный</h1>
-<p class="lead">Бумажный пакет с белым логотипом на лицевой стороне. Модель вращается; потяните её мышью или пальцем, чтобы рассмотреть.</p></header>
-<section class="stage" style="padding:0;overflow:hidden"><iframe class="model" src="bag3d.html" title="3D-модель чёрного пакета"></iframe></section>
-<section><h2>Параметры</h2><dl class="spec">
+<header><span class="eyebrow">Школа Ямолод</span><h1>Пакет бумажный</h1>
+<p class="lead">Два варианта бумажного пакета с логотипом «Школа Ямолод». Модели вращаются; потяните мышью или пальцем, чтобы рассмотреть.</p></header>
+
+<section class="variant" aria-labelledby="v1">
+<h2 id="v1">Вариант 1 · Чёрный, 25 × 35 × 8 см</h2>
+<div class="stage" style="padding:0;overflow:hidden"><iframe class="model" src="bag3d.html" title="3D-модель чёрного пакета" loading="lazy"></iframe></div>
+<dl class="spec">
 <div><dt>Пакет</dt><dd>25 × 35 × 8 см, бумага 200 г/м²</dd></div>
 <div><dt>Цвет</dt><dd>Чёрный, ручки — белый шнур</dd></div>
-<div><dt>Логотип</dt><dd>Белый, 160 × 59 мм, только лицевая сторона</dd></div></dl></section>
+<div><dt>Логотип</dt><dd>Белый, 160 × 59 мм, только лицевая сторона</dd></div></dl>
+</section>
+
+<section class="variant" aria-labelledby="v2">
+<h2 id="v2">Вариант 2 · Крафт, 23 × 30 × 12 см</h2>
+<div class="stage" style="padding:0;overflow:hidden"><iframe class="model" src="bag3d-kraft.html" title="3D-модель крафтового пакета" loading="lazy"></iframe></div>
+<dl class="spec">
+<div><dt>Пакет</dt><dd>23 × 30 × 12 см, крафт-бумага 200 г/м²</dd></div>
+<div><dt>Цвет</dt><dd>Светло-коричневый крафт, ручки чёрные</dd></div>
+<div><dt>Логотип</dt><dd>Чёрный, 140 × 51 мм, термотрансфер, только лицевая сторона</dd></div></dl>
+</section>
 </div>
 </body></html>
